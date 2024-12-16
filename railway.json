@@ -4,7 +4,7 @@
         "builder": "NIXPACKS"
     },
     "deploy": {
-        "startCommand": "gunicorn api:app; chmod +x ./seamcarving",
+        "startCommand": "gunicorn api:app",
         "restartPolicyType": "ON_FAILURE",
         "restartPolicyMaxRetries": 10
     }
