@@ -15,7 +15,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Compile the C++ executable
-RUN g++ -o seamcarving seamcarving.cpp `pkg-config --cflags --libs opencv4`
+RUN g++ -o seamcarving seamcarving.cpp `pkg-config --cflags --libs opencv`
 
 # Run the application
 CMD ["gunicorn", "api:app"]
