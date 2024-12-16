@@ -1,18 +1,21 @@
-# Use an official Ubuntu as a parent image
-FROM ubuntu:20.04
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libopencv-dev
+    apt-get install -y build-essential libopencv-dev
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Compile the OpenCV project
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Compile the C++ executable
 RUN g++ -o seamcarving seamcarving.cpp `pkg-config --cflags --libs opencv4`
 
-# Run the executable
-CMD ["./seamcarving"]
+# Run the application
+CMD ["gunicorn", "api:app"]
