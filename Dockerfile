@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential libopencv-dev
+    apt-get install -y build-essential libopencv-dev pkg-config
 
 # Copy the current directory contents into the container at /app
 COPY . /app
@@ -16,6 +16,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Compile the C++ executable
 RUN g++ -o seamcarving seamcarving.cpp `pkg-config --cflags --libs opencv`
-
-# Run the application
-CMD ["gunicorn", "api:app"]
